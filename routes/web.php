@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'EmployeeController@index');
+Route::post('add_emloyee','EmployeeController@store');
+Route::post('update_emloyee','EmployeeController@update');
+Route::get('/delete_emloyee/{id}','EmployeeController@delete_emloyee');
+// Route::get('/delete_emloyee',function(){
+//     dd("in");
+// });

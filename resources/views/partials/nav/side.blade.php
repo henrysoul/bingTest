@@ -2,13 +2,6 @@
     <!-- mini side bar -->
     <div class="mini-sidebar shadow-sm">
         <ul class="mini-nav list-unstyled">
-
-            <li class="mini-nav-item">
-                <a href="javascript:void(0)" id="sideBarToggle" class="mini-nav-link">
-                    <i class="fas fa-bars"></i>
-                </a>
-            </li>
-
             <li class="mini-nav-item">
                 <a href="#" class="mini-nav-link">
                     <i class="fas fa-search"></i>
@@ -39,11 +32,19 @@
                 </a>
             </li>
 
-            <li class="mini-nav-item">
-                <a href="#" class="mini-nav-link">
-                    <i class="fas fa-cog"></i>
-                </a>
-            </li>
+            <div class="last">
+                <li class="mini-nav-item">
+                    <a href="#" class="mini-nav-link">
+                        <i class="fas fa-cog"></i>
+                    </a>
+                </li>
+    
+                <li class="mini-nav-item">
+                    <a href="javascript:void(0)" id="sideBarToggle" class="mini-nav-link">
+                        <i class="fas fa-bars"></i>
+                    </a>
+                </li>
+            </div>
         </ul>
     </div>
     <!-- end mini side bar -->
