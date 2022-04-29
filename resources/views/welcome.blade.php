@@ -162,15 +162,15 @@
                                                         @foreach($permissions as $perm)
                                                         @php
                                                         foreach( $emp->user->permissions as $p){
-                                                        $checked = false;
-                                                        if($p->id == $perm->id){
-                                                        $checked = true;
+                                                        $checked = "";
+                                                        if($p->id === $perm->id){
+                                                        $checked = "checked";
                                                         }
                                                         }
                                                         @endphp
                                                         <div class="col mb-4"><label> <input class="m-2" type="checkbox"
                                                                     name="permissions" value={{$perm->id}}
-                                                                checked={{$checked}} />Can
+                                                                {{$checked}} />Can
                                                                 {{$perm->name}}</label>
                                                         </div>
                                                         @endforeach

@@ -15,9 +15,8 @@ class EmployeeController extends Controller
     {
         $roles = Role::all();
         $permissions = Permission::all();
-        $employees = Employee::first();
+        $employees = Employee::all();
 
-        dd($employees->user()->permissions);
         
         return view('welcome', compact('roles', 'permissions','employees'));
     }
@@ -62,5 +61,9 @@ class EmployeeController extends Controller
         Employee::where('uuid',$uuid)->delete();
         return back()->with('success', 'Employee deleted successfully');
 
+    }
+
+    public function update_employee(){
+        return back();
     }
 }
