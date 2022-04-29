@@ -15,9 +15,9 @@ class EmployeeController extends Controller
     {
         $roles = Role::all();
         $permissions = Permission::all();
-        $employees = Employee::all();
+        $employees = Employee::first();
 
-        // dd($employees);
+        dd($employees->user()->permissions);
         
         return view('welcome', compact('roles', 'permissions','employees'));
     }

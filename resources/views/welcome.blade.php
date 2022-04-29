@@ -75,16 +75,120 @@
                                     <button class="btn" data-bs-toggle="modal" data-bs-target="#editUser{{$emp->id}}">
                                         <i class="far fa-edit"></i>
                                     </button>
-                                    <a href="{{ url('delete_employee', [$emp->uuid]) }} " onclick="return confirm('Are you sure?')" class="btn">
+                                    <a href="{{ url('delete_employee', [$emp->uuid]) }} "
+                                        onclick="return confirm('Are you sure?')" class="btn">
                                         <i class="far fa-trash-alt"></i>
                                     </a>
                                 </td>
+                                {{-- Edit user modal --}}
+                                <div class="modal fade" id="editUser{{$emp->id}}" tabindex="-1"
+                                    aria-labelledby="addUser" aria-hidden="true">
+                                    <div class="modal-dialog modal-xl ">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Add user</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                @include('partials.alerts')
+                                                <form method="post" action={{url('update_emloyee')}} autocomplete="off">
+                                                    @csrf
+                                                    <div class="mb-3">
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Employee ID *"
+                                                            value="{{old('employee_id') ?old('employee_id'):$emp->employee_id}}"
+                                                            name="employee_id" required>
+                                                    </div>
 
+                                                    <div class="row">
+                                                        <div class="col mb-3">
+                                                            <input type="text" class="form-control"
+                                                                placeholder="First Name *"
+                                                                value="{{old('first_name')?old('first_name'):$emp->first_name}}"
+                                                                name="first_name" required>
+                                                        </div>
+                                                        <div class="col mb-3">
+                                                            <input type="text" class="form-control"
+                                                                placeholder="Last Name *"
+                                                                value="{{old('last_name') ?old('last_name') :$emp->last_name}}"
+                                                                name="last_name" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col mb-3">
+                                                            <input type="email" class="form-control"
+                                                                placeholder="Email ID *" name="email"
+                                                                value="{{old('email') ?old('email'):$emp->email}}"
+                                                                required>
+                                                        </div>
+                                                        <div class="col mb-3">
+                                                            <input type="text" class="form-control"
+                                                                placeholder="Mobile No"
+                                                                value="{{old('phone')?old('phone'):$emp->phone}}"
+                                                                name="phone">
+                                                        </div>
+                                                        <div class="col mb-3">
+                                                            <select class="form-control" name="role_type"
+                                                                value="{{old('role_type')}}" required
+                                                                id="roleEditSelect">
+                                                                <option>Select Role Type</option>
+                                                                @foreach($roles as $role)
+                                                                <option value={{$role->id}}>{{$role->name}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col mb-3">
+                                                            <input type="text" class="form-control" autocomplete="off"
+                                                                placeholder="Username *" value="{{old('username')}}"
+                                                                name="username" required>
+                                                        </div>
+                                                        <div class="col mb-3">
+                                                            <input type="password" class="form-control"
+                                                                autocomplete="off" placeholder="Password*"
+                                                                name="password" required>
+                                                        </div>
+                                                        <div class="col mb-3">
+                                                            <input type="password" class="form-control"
+                                                                placeholder="Confirm Password*"
+                                                                name="password_confirmation" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col mb-4"><span
+                                                                id="roleTypeEdit">{{$emp->role->name}}</span> Role</div>
+                                                        @foreach($permissions as $perm)
+                                                        @php
+                                                        foreach( $emp->user->permissions as $p){
+                                                        $checked = false;
+                                                        if($p->id == $perm->id){
+                                                        $checked = true;
+                                                        }
+                                                        }
+                                                        @endphp
+                                                        <div class="col mb-4"><label> <input class="m-2" type="checkbox"
+                                                                    name="permissions" value={{$perm->id}}
+                                                                checked={{$checked}} />Can
+                                                                {{$perm->name}}</label>
+                                                        </div>
+                                                        @endforeach
+                                                    </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary">Add
+                                                    user</button>
+                                                <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{--End Edit user modal --}}
                             </tr>
 
-                            {{-- Add user modal --}}
-                            
-                            {{--End Add user modal --}}
+
                             @endforeach
                             <!-- end of row -->
                         </tbody>
@@ -160,7 +264,7 @@
                         <table class="table table-borderless">
                             <thead>
                                 <tr class="bg-light text-muted">
-                                    <th class="py-4 ps-4" >Module permission</th>
+                                    <th class="py-4 ps-4">Module permission</th>
                                     <th class="py-4">Read</th>
                                     <th class="py-4">Write</th>
                                     <th class="py-4">Delete</th>
@@ -173,7 +277,7 @@
                                         Super Admin
                                     </td>
                                     @foreach($permissions as $perm)
-                                    <td >
+                                    <td>
                                         <input type="checkbox" name="permissions" value={{$perm->id}} />
                                     </td>
                                     @endforeach
@@ -187,10 +291,9 @@
 
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" >Add
+                <button type="submit" class="btn btn-primary">Add
                     user</button>
-                <button type="button" class="btn" 
-                    data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
             </div>
             </form>
         </div>
@@ -202,6 +305,7 @@
 @section('script')
 <script type="text/javascript">
     let roles = document.querySelector('#role');
+    let rolesEdit = document.querySelector('#roleEditSelect');
     let selectedRole="";
     roles.addEventListener('change',(e)=>{
         selectedRole =  roles.options[roles.selectedIndex].text;
@@ -210,6 +314,13 @@
             document.querySelector('#permissions').classList.remove('d-none');
             document.querySelector('#roleTitle').innerHTML=selectedRole;
 
+        }
+    });
+
+    rolesEdit.addEventListener('change',(e)=>{
+        let selected =  roles.options[rolesEdit.selectedIndex].text;
+        if(selected){
+            document.querySelector('#roleTypeEdit').innerHTML=selected;
         }
     });
     
