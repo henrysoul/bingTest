@@ -75,7 +75,7 @@
                                     <button class="btn" data-bs-toggle="modal" data-bs-target="#editUser{{$emp->id}}">
                                         <i class="far fa-edit"></i>
                                     </button>
-                                    <a href="{{ url('delete_employee', [$emp->uuid]) }} " class="btn">
+                                    <a href="{{ url('delete_employee', [$emp->uuid]) }} " onclick="return confirm('Are you sure?')" class="btn">
                                         <i class="far fa-trash-alt"></i>
                                     </a>
                                 </td>
